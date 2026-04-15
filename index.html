@@ -46,10 +46,75 @@
 
         body {
             font-family: Manrope, sans-serif;
-            background: #000000;
-            color: #cbd5e1;
+            background: var(--bg-base);
+            color: var(--text-main);
             position: relative;
             overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        body[data-theme='dark'] {
+            --bg-base: #020617;
+            --text-main: #cbd5e1;
+            --text-strong: #e2e8f0;
+            --text-muted: #94a3b8;
+            --nav-bg: rgba(4, 11, 34, 0.68);
+            --nav-border: rgba(147, 197, 253, 0.35);
+            --brand-bg: #0f172a;
+            --brand-fg: #f8fafc;
+            --cta-bg: linear-gradient(135deg, #0ea5e9, #2563eb);
+            --cta-fg: #eff6ff;
+            --cta-shadow: 0 14px 36px -16px rgba(14, 165, 233, 0.8);
+            --card-bg: rgba(6, 14, 36, 0.66);
+            --card-border: rgba(125, 211, 252, 0.36);
+            --card-grad-a: rgba(56, 189, 248, 0.62);
+            --card-grad-b: rgba(59, 130, 246, 0.54);
+            --card-grad-c: rgba(99, 102, 241, 0.45);
+            --chip-bg: rgba(15, 23, 42, 0.8);
+            --chip-border: rgba(56, 189, 248, 0.35);
+            --preview-bg: linear-gradient(145deg, rgba(2, 6, 23, 0.92), rgba(15, 23, 42, 0.92));
+            --preview-border: rgba(56, 189, 248, 0.35);
+            --preview-overlay-1: rgba(56, 189, 248, 0.16);
+            --preview-overlay-2: rgba(15, 23, 42, 0.52);
+            --hero-pill-bg: rgba(14, 165, 233, 0.12);
+            --hero-pill-border: rgba(125, 211, 252, 0.32);
+            --hero-pill-fg: #bae6fd;
+            --hero-accent: #7dd3fc;
+            --orb-from: rgba(56, 189, 248, 0.55);
+            --orb-mid: rgba(99, 102, 241, 0.45);
+            --footer-border: rgba(125, 211, 252, 0.25);
+        }
+
+        body[data-theme='light'] {
+            --bg-base: #fffdf6;
+            --text-main: #334155;
+            --text-strong: #0f172a;
+            --text-muted: #64748b;
+            --nav-bg: rgba(255, 252, 245, 0.86);
+            --nav-border: rgba(45, 212, 191, 0.4);
+            --brand-bg: #0f766e;
+            --brand-fg: #f8fafc;
+            --cta-bg: linear-gradient(135deg, #14b8a6, #0ea5a4);
+            --cta-fg: #f8fafc;
+            --cta-shadow: 0 14px 36px -16px rgba(15, 118, 110, 0.5);
+            --card-bg: rgba(255, 250, 235, 0.78);
+            --card-border: rgba(45, 212, 191, 0.35);
+            --card-grad-a: rgba(45, 212, 191, 0.52);
+            --card-grad-b: rgba(13, 148, 136, 0.4);
+            --card-grad-c: rgba(245, 158, 11, 0.3);
+            --chip-bg: rgba(255, 247, 237, 0.78);
+            --chip-border: rgba(20, 184, 166, 0.32);
+            --preview-bg: linear-gradient(145deg, rgba(255, 252, 245, 0.92), rgba(254, 243, 199, 0.66));
+            --preview-border: rgba(45, 212, 191, 0.38);
+            --preview-overlay-1: rgba(45, 212, 191, 0.15);
+            --preview-overlay-2: rgba(255, 251, 235, 0.7);
+            --hero-pill-bg: rgba(45, 212, 191, 0.14);
+            --hero-pill-border: rgba(20, 184, 166, 0.34);
+            --hero-pill-fg: #0f766e;
+            --hero-accent: #0f766e;
+            --orb-from: rgba(45, 212, 191, 0.42);
+            --orb-mid: rgba(251, 191, 36, 0.32);
+            --footer-border: rgba(20, 184, 166, 0.23);
         }
 
         body::before {
@@ -58,11 +123,26 @@
             inset: 0;
             pointer-events: none;
             background:
-                radial-gradient(circle at 15% 8%, rgba(139, 92, 246, 0.15), transparent 28%),
-                radial-gradient(circle at 88% 18%, rgba(168, 85, 247, 0.12), transparent 32%),
-                radial-gradient(circle at 50% 92%, rgba(126, 34, 206, 0.1), transparent 40%);
+                radial-gradient(circle at 15% 8%, var(--orb-from), transparent 28%),
+                radial-gradient(circle at 88% 18%, var(--orb-mid), transparent 32%),
+                radial-gradient(circle at 50% 92%, color-mix(in srgb, var(--orb-mid) 70%, transparent), transparent 40%);
             animation: float-gradient 15s ease-in-out infinite;
-            z-index: 1;
+            z-index: -2;
+            transition: background 0.55s ease;
+            opacity: 0.72;
+        }
+
+        body[data-theme='light']::before {
+            background:
+                radial-gradient(130% 68% at 10% 102%, rgba(20, 184, 166, 0.18), transparent 66%),
+                radial-gradient(115% 62% at 68% 106%, rgba(45, 212, 191, 0.2), transparent 68%),
+                radial-gradient(90% 46% at 50% 103%, rgba(251, 191, 36, 0.12), transparent 64%);
+            animation: wave-swell 16s ease-in-out infinite;
+            opacity: 0.64;
+        }
+
+        body[data-theme='dark']::before {
+            animation: float-gradient 15s ease-in-out infinite;
         }
 
         body::after {
@@ -71,46 +151,102 @@
             inset: 0;
             pointer-events: none;
             background-image:
-                linear-gradient(rgba(139, 92, 246, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(139, 92, 246, 0.04) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: scan-lines 8s linear infinite;
-            z-index: 0;
+                radial-gradient(circle at 20% 25%, rgba(186, 230, 253, 0.45) 1px, transparent 1.5px),
+                radial-gradient(circle at 70% 15%, rgba(224, 242, 254, 0.35) 1px, transparent 1.5px),
+                radial-gradient(circle at 40% 70%, rgba(147, 197, 253, 0.3) 1px, transparent 1.5px);
+            background-size: 280px 280px;
+            animation: star-drift 24s linear infinite, star-twinkle 4.8s ease-in-out infinite;
+            z-index: -1;
+            transition: opacity 0.55s ease, background-image 0.55s ease;
+            opacity: 0.58;
+        }
+
+        body[data-theme='light']::after {
+            background-image:
+                radial-gradient(130% 62% at 15% 104%, rgba(20, 184, 166, 0.16), transparent 60%),
+                radial-gradient(120% 56% at 72% 105%, rgba(45, 212, 191, 0.14), transparent 58%),
+                repeating-radial-gradient(130% 60% at 50% 108%, rgba(20, 184, 166, 0.1) 0 2px, rgba(20, 184, 166, 0) 8px 22px);
+            background-size: 180% 140%, 190% 150%, 200% 120%;
+            animation: light-wave-lines 10s ease-in-out infinite;
+            opacity: 0.44;
+        }
+
+        body[data-theme='dark']::after {
+            opacity: 0.6;
+        }
+
+        .app-shell {
+            position: relative;
+            z-index: 1;
+            isolation: isolate;
         }
 
         @keyframes float-gradient {
             0%, 100% {
                 background:
-                    radial-gradient(circle at 15% 8%, rgba(139, 92, 246, 0.15), transparent 28%),
-                    radial-gradient(circle at 88% 18%, rgba(168, 85, 247, 0.12), transparent 32%),
-                    radial-gradient(circle at 50% 92%, rgba(126, 34, 206, 0.1), transparent 40%);
+                    radial-gradient(circle at 15% 8%, var(--orb-from), transparent 28%),
+                    radial-gradient(circle at 88% 18%, var(--orb-mid), transparent 32%),
+                    radial-gradient(circle at 50% 92%, color-mix(in srgb, var(--orb-mid) 70%, transparent), transparent 40%);
             }
             25% {
                 background:
-                    radial-gradient(circle at 20% 15%, rgba(139, 92, 246, 0.18), transparent 30%),
-                    radial-gradient(circle at 82% 22%, rgba(168, 85, 247, 0.14), transparent 35%),
-                    radial-gradient(circle at 45% 88%, rgba(126, 34, 206, 0.12), transparent 42%);
+                    radial-gradient(circle at 20% 15%, var(--orb-from), transparent 30%),
+                    radial-gradient(circle at 82% 22%, var(--orb-mid), transparent 35%),
+                    radial-gradient(circle at 45% 88%, color-mix(in srgb, var(--orb-mid) 65%, transparent), transparent 42%);
             }
             50% {
                 background:
-                    radial-gradient(circle at 25% 10%, rgba(139, 92, 246, 0.2), transparent 32%),
-                    radial-gradient(circle at 75% 25%, rgba(168, 85, 247, 0.16), transparent 36%),
-                    radial-gradient(circle at 55% 90%, rgba(126, 34, 206, 0.14), transparent 44%);
+                    radial-gradient(circle at 25% 10%, var(--orb-from), transparent 32%),
+                    radial-gradient(circle at 75% 25%, var(--orb-mid), transparent 36%),
+                    radial-gradient(circle at 55% 90%, color-mix(in srgb, var(--orb-mid) 60%, transparent), transparent 44%);
             }
             75% {
                 background:
-                    radial-gradient(circle at 12% 12%, rgba(139, 92, 246, 0.17), transparent 30%),
-                    radial-gradient(circle at 90% 16%, rgba(168, 85, 247, 0.13), transparent 33%),
-                    radial-gradient(circle at 52% 94%, rgba(126, 34, 206, 0.11), transparent 41%);
+                    radial-gradient(circle at 12% 12%, var(--orb-from), transparent 30%),
+                    radial-gradient(circle at 90% 16%, var(--orb-mid), transparent 33%),
+                    radial-gradient(circle at 52% 94%, color-mix(in srgb, var(--orb-mid) 60%, transparent), transparent 41%);
             }
         }
 
-        @keyframes scan-lines {
+        @keyframes star-drift {
             0% {
-                transform: translateY(0);
+                background-position: 0 0, 0 0, 0 0;
             }
             100% {
-                transform: translateY(10px);
+                background-position: -40px 24px, 26px 42px, -18px 20px;
+            }
+        }
+
+        @keyframes star-twinkle {
+            0%, 100% {
+                opacity: 0.62;
+                filter: brightness(0.92);
+            }
+            50% {
+                opacity: 0.84;
+                filter: brightness(1.18);
+            }
+        }
+
+        @keyframes wave-swell {
+            0%, 100% {
+                background-position: 0% 0%, 0% 0%, 0 0;
+                filter: saturate(1);
+            }
+            50% {
+                background-position: 8% 6%, -6% 8%, 0 0;
+                filter: saturate(1.04);
+            }
+        }
+
+        @keyframes light-wave-lines {
+            0%, 100% {
+                background-position: 0% 0%, 0% 0%, 50% 100%;
+                transform: translateY(0);
+            }
+            50% {
+                background-position: 12% 6%, -10% 9%, 44% 96%;
+                transform: translateY(-2px);
             }
         }
 
@@ -121,15 +257,16 @@
             opacity: 0.4;
             pointer-events: none;
             z-index: 2;
+            background: radial-gradient(circle, var(--orb-from) 0%, var(--orb-mid) 45%, transparent 75%) !important;
         }
 
         .neon-card {
             position: relative;
-            background: rgba(8, 12, 28, 0.66) !important;
-            border: 1px solid rgba(139, 92, 246, 0.35) !important;
+            background: var(--card-bg) !important;
+            border: 1px solid var(--card-border) !important;
             box-shadow:
-                0 10px 35px -22px rgba(139, 92, 246, 0.65),
-                0 0 0 1px rgba(168, 85, 247, 0.14),
+                0 10px 35px -22px rgba(14, 116, 144, 0.5),
+                0 0 0 1px rgba(125, 211, 252, 0.14),
                 inset 0 1px 0 rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
@@ -141,7 +278,7 @@
             inset: -1px;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(125deg, rgba(139, 92, 246, 0.7), rgba(168, 85, 247, 0.6), rgba(126, 34, 206, 0.5));
+            background: linear-gradient(125deg, var(--card-grad-a), var(--card-grad-b), var(--card-grad-c));
             -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
@@ -152,9 +289,9 @@
 
         .neon-card:hover {
             box-shadow:
-                0 22px 44px -22px rgba(139, 92, 246, 0.8),
-                0 0 28px rgba(168, 85, 247, 0.3),
-                0 0 18px rgba(147, 51, 234, 0.25);
+                0 22px 44px -22px rgba(14, 165, 233, 0.72),
+                0 0 28px rgba(56, 189, 248, 0.3),
+                0 0 18px rgba(59, 130, 246, 0.24);
             transform: translateY(-2px);
         }
 
@@ -212,16 +349,16 @@
         }
 
         .neon-chip {
-            background: rgba(15, 23, 42, 0.8) !important;
-            border: 1px solid rgba(34, 211, 238, 0.3) !important;
+            background: var(--chip-bg) !important;
+            border: 1px solid var(--chip-border) !important;
         }
 
         .preview-shell {
             position: relative;
             overflow: hidden;
             border-radius: 1rem;
-            border: 1px solid rgba(56, 189, 248, 0.35);
-            background: linear-gradient(145deg, rgba(2, 6, 23, 0.92), rgba(15, 23, 42, 0.92));
+            border: 1px solid var(--preview-border);
+            background: var(--preview-bg);
             box-shadow:
                 inset 0 1px 0 rgba(255, 255, 255, 0.08),
                 0 18px 40px -24px rgba(56, 189, 248, 0.55),
@@ -246,11 +383,130 @@
             justify-content: center;
             text-align: center;
             padding: 1.25rem;
-            color: #cbd5e1;
+            color: var(--text-main);
             background:
-                radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.16), transparent 55%),
-                linear-gradient(180deg, rgba(15, 23, 42, 0.12), rgba(15, 23, 42, 0.52));
+                radial-gradient(circle at 50% 30%, var(--preview-overlay-1), transparent 55%),
+                linear-gradient(180deg, rgba(15, 23, 42, 0.12), var(--preview-overlay-2));
             transition: opacity 0.35s ease;
+        }
+
+        .hero-pill {
+            background: var(--hero-pill-bg) !important;
+            border-color: var(--hero-pill-border) !important;
+            color: var(--hero-pill-fg) !important;
+        }
+
+        .hero-accent {
+            color: var(--hero-accent) !important;
+        }
+
+        .brand-mark {
+            background: var(--brand-bg) !important;
+            color: var(--brand-fg) !important;
+        }
+
+        .cta-main {
+            background: var(--cta-bg) !important;
+            color: var(--cta-fg) !important;
+            box-shadow: var(--cta-shadow);
+        }
+
+        .status-pill {
+            color: var(--text-main);
+            border-color: var(--chip-border);
+            background: var(--chip-bg);
+        }
+
+        .status-pill.is-neutral {
+            color: var(--text-main);
+            border-color: var(--chip-border);
+            background: var(--chip-bg);
+        }
+
+        .status-pill.is-loading {
+            border-color: rgba(56, 189, 248, 0.5);
+            background: rgba(14, 165, 233, 0.12);
+            color: color-mix(in srgb, var(--text-strong) 82%, #38bdf8);
+        }
+
+        .status-pill.is-success {
+            border-color: rgba(34, 197, 94, 0.5);
+            background: rgba(34, 197, 94, 0.14);
+            color: color-mix(in srgb, var(--text-strong) 82%, #22c55e);
+        }
+
+        .status-pill.is-error {
+            border-color: rgba(244, 63, 94, 0.55);
+            background: rgba(244, 63, 94, 0.12);
+            color: color-mix(in srgb, var(--text-strong) 82%, #fb7185);
+        }
+
+        .theme-toggle {
+            position: relative;
+            display: grid;
+            place-items: center;
+            width: 2.8rem;
+            height: 2.8rem;
+            border-radius: 9999px;
+            border: 1px solid var(--card-border);
+            background: color-mix(in srgb, var(--card-bg) 88%, transparent);
+            color: var(--text-main);
+            backdrop-filter: blur(8px);
+            transition: all 0.35s ease;
+            box-shadow: 0 10px 26px -18px rgba(15, 118, 110, 0.5);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .theme-glyph {
+            position: relative;
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
+        .theme-glyph svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            stroke-width: 2;
+            transform-origin: center;
+            transition: opacity 0.42s ease, transform 0.52s cubic-bezier(0.23, 1, 0.32, 1), color 0.4s ease;
+        }
+
+        .theme-glyph .sun-svg {
+            color: #0f766e;
+        }
+
+        .theme-glyph .moon-svg {
+            color: #1e40af;
+        }
+
+        body[data-theme='light'] .theme-glyph .sun-svg {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        body[data-theme='light'] .theme-glyph .moon-svg {
+            opacity: 0;
+            transform: rotate(-42deg) scale(0.42);
+        }
+
+        body[data-theme='dark'] .theme-glyph .sun-svg {
+            opacity: 0;
+            transform: rotate(42deg) scale(0.44);
+        }
+
+        body[data-theme='dark'] .theme-glyph .moon-svg {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        .theme-toggle.is-morphing .theme-glyph .sun-svg,
+        .theme-toggle.is-morphing .theme-glyph .moon-svg {
+            transition-duration: 0.5s;
         }
 
         .preview-shell:not(.is-empty) .preview-overlay {
@@ -259,29 +515,38 @@
         }
 
         .text-slate-900 {
-            color: #f8fafc !important;
+            color: var(--text-strong) !important;
         }
 
         .text-slate-700 {
-            color: #cbd5e1 !important;
+            color: var(--text-main) !important;
         }
 
         .text-slate-600,
         .text-slate-500 {
-            color: #94a3b8 !important;
+            color: var(--text-muted) !important;
+        }
+
+        .site-nav {
+            border-color: var(--nav-border) !important;
+            background: var(--nav-bg) !important;
+        }
+
+        .site-footer {
+            border-color: var(--footer-border) !important;
         }
     </style>
 </head>
-<body class="text-slate-700 antialiased">
-    <div class="relative overflow-hidden min-h-screen" style="z-index: 3; position: relative;">
+<body class="text-slate-700 antialiased" data-theme="dark">
+    <div class="app-shell relative overflow-hidden min-h-screen" style="z-index: 3; position: relative;">
         <div class="mesh-orb w-64 h-64 bg-purple-400 -top-20 -left-12" style="animation: float 8s ease-in-out infinite;"></div>
         <div class="mesh-orb w-72 h-72 bg-violet-400 top-1/3 -right-16" style="animation: float 10s ease-in-out infinite 1s;"></div>
 
         <header class="fixed top-0 inset-x-0 z-50">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-                <nav class="neon-card mt-4 flex items-center justify-between rounded-2xl border border-white/50 bg-white/65 backdrop-blur-md shadow-sm">
+                <nav class="site-nav neon-card mt-4 flex items-center justify-between rounded-2xl border border-white/50 bg-white/65 backdrop-blur-md shadow-sm">
                     <div class="flex items-center gap-3 px-5 py-3">
-                        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-white shadow-card">
+                        <div class="brand-mark flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-white shadow-card">
                             <i data-lucide="scissors" class="h-5 w-5"></i>
                         </div>
                         <span class="font-display text-lg tracking-tight text-slate-900">ClipMaker</span>
@@ -291,9 +556,29 @@
                         <a href="#features" class="transition-colors duration-300 hover:text-slate-900">Recursos</a>
                         <a href="#studio" class="transition-colors duration-300 hover:text-slate-900">Studio</a>
                     </div>
-                    <a href="#studio" class="m-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500">
-                        Começar agora
-                    </a>
+                    <div class="m-2 flex items-center gap-2">
+                        <button id="themeToggle" type="button" class="theme-toggle" aria-label="Alternar modo claro e escuro" aria-pressed="false">
+                            <span class="theme-glyph" aria-hidden="true">
+                                <svg class="sun-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="4"></circle>
+                                    <path d="M12 2v2"></path>
+                                    <path d="M12 20v2"></path>
+                                    <path d="m4.93 4.93 1.41 1.41"></path>
+                                    <path d="m17.66 17.66 1.41 1.41"></path>
+                                    <path d="M2 12h2"></path>
+                                    <path d="M20 12h2"></path>
+                                    <path d="m6.34 17.66-1.41 1.41"></path>
+                                    <path d="m19.07 4.93-1.41 1.41"></path>
+                                </svg>
+                                <svg class="moon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 3a7 7 0 1 0 9 9 9 9 0 1 1-9-9z"></path>
+                                </svg>
+                            </span>
+                        </button>
+                        <a href="#studio" class="cta-main rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400">
+                            Começar agora
+                        </a>
+                    </div>
                 </nav>
             </div>
         </header>
@@ -303,13 +588,13 @@
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
                     <div class="grid items-center gap-14 lg:grid-cols-12">
                         <div class="lg:col-span-7 space-y-8" data-animate="fade-up">
-                            <span class="inline-flex items-center gap-2 rounded-full border border-purple-300/40 bg-purple-500/10 px-4 py-2 text-sm font-medium text-purple-200 shadow-sm" data-animate="slide-in-left">
+                            <span class="hero-pill inline-flex items-center gap-2 rounded-full border border-purple-300/40 bg-purple-500/10 px-4 py-2 text-sm font-medium text-purple-200 shadow-sm" data-animate="slide-in-left">
                                 <i data-lucide="sparkles" class="h-4 w-4"></i>
                                 IA que entende ritmo, gancho e retenção
                             </span>
                             <h1 class="font-display text-4xl sm:text-5xl xl:text-6xl font-bold tracking-tight text-slate-900 leading-tight" data-animate="scale-fade">
                                 Seu próximo corte viral não é sorte.
-                                <span class="block text-purple-400">É engenharia de atenção.</span>
+                                <span class="hero-accent block text-purple-400">É engenharia de atenção.</span>
                             </h1>
                             <p class="max-w-2xl text-lg sm:text-xl text-slate-500 leading-relaxed">
                                 Transforme vídeos longos em clipes com potencial real de compartilhamento. O ClipMaker analisa sua transcrição, identifica o pico emocional e entrega um corte pronto para publicar.
@@ -335,6 +620,25 @@
                                     </div>
                                     <label for="apiKey" class="block text-sm font-semibold text-slate-700">Gemini API Key</label>
                                     <input id="apiKey" type="password" placeholder="Cole sua chave começando por AIza..." class="w-full rounded-2xl border border-cyan-400/35 bg-slate-950/70 px-4 py-3 text-slate-200 shadow-sm outline-none transition-all duration-300 placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-500/20" />
+                                    
+                                    <div class="space-y-4 pt-4 border-t border-slate-200">
+                                        <div>
+                                            <h3 class="text-sm font-semibold text-slate-700 mb-3">Configurar corte manual (opcional)</h3>
+                                            <p class="text-xs text-slate-500 mb-4">Deixe em branco para gerar com IA automaticamente</p>
+                                            <div class="grid grid-cols-2 gap-3">
+                                                <div>
+                                                    <label for="startTime" class="block text-xs font-semibold text-slate-600 mb-1">Início (segundos)</label>
+                                                    <input id="startTime" type="number" placeholder="Ex: 75" min="0" step="0.5" class="w-full rounded-lg border border-cyan-400/35 bg-slate-950/70 px-3 py-2 text-slate-200 text-sm outline-none transition-all duration-300 placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-500/20" />
+                                                    <span class="text-xs text-slate-500 mt-1 block">1:15 = 75s</span>
+                                                </div>
+                                                <div>
+                                                    <label for="duration" class="block text-xs font-semibold text-slate-600 mb-1">Duração (segundos)</label>
+                                                    <input id="duration" type="number" placeholder="Ex: 60" min="30" max="60" step="0.5" class="w-full rounded-lg border border-cyan-400/35 bg-slate-950/70 px-3 py-2 text-slate-200 text-sm outline-none transition-all duration-300 placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-500/20" />
+                                                    <span class="text-xs text-slate-500 mt-1 block">Máx: 60s</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div id="buttonSlotDefault" class="upload-slot">
                                         <button id="uploadWidget" type="button" class="glow-btn inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 disabled:cursor-not-allowed disabled:opacity-60">
                                             <i data-lucide="upload-cloud" class="h-4 w-4"></i>
@@ -342,7 +646,7 @@
                                         </button>
                                     </div>
                                     <div id="buttonSlotProcessing" class="upload-slot upload-slot-dock hidden"></div>
-                                    <p id="status" role="status" aria-live="polite" class="neon-chip rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                                    <p id="status" role="status" aria-live="polite" class="status-pill is-neutral rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
                                         Aguardando seu primeiro upload.
                                     </p>
                                 </div>
@@ -452,7 +756,7 @@
             </section>
         </main>
 
-        <footer class="border-t border-cyan-400/20 py-10">
+        <footer class="site-footer border-t border-cyan-400/20 py-10">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
                 <p>ClipMaker. Corte menos, impacte mais.</p>
                 <p>Design system focado em clareza, ritmo e conversão.</p>
@@ -481,7 +785,35 @@
             button: document.getElementById('uploadWidget'),
             buttonLabel: document.getElementById('uploadButtonLabel'),
             buttonSlotDefault: document.getElementById('buttonSlotDefault'),
-            buttonSlotProcessing: document.getElementById('buttonSlotProcessing')
+            buttonSlotProcessing: document.getElementById('buttonSlotProcessing'),
+            themeToggle: document.getElementById('themeToggle'),
+            startTime: document.getElementById('startTime'),
+            duration: document.getElementById('duration')
+        };
+
+        const themeStorageKey = 'clipmaker-theme';
+
+        const applyTheme = (theme) => {
+            document.body.dataset.theme = theme;
+            localStorage.setItem(themeStorageKey, theme);
+            el.themeToggle?.setAttribute('aria-pressed', String(theme === 'dark'));
+            el.themeToggle?.setAttribute('aria-label', theme === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro');
+        };
+
+        const setupThemeToggle = () => {
+            const savedTheme = localStorage.getItem(themeStorageKey);
+            const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            applyTheme(savedTheme || preferredTheme);
+
+            el.themeToggle?.addEventListener('click', () => {
+                const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+                el.themeToggle.classList.add('is-morphing');
+                applyTheme(nextTheme);
+
+                window.setTimeout(() => {
+                    el.themeToggle?.classList.remove('is-morphing');
+                }, 520);
+            });
         };
 
         const setPreviewLoadedState = (hasLoadedVideo) => {
@@ -517,14 +849,14 @@
 
         const setStatus = (message, type = 'neutral') => {
             const variants = {
-                neutral: 'border-cyan-400/30 bg-slate-900/70 text-slate-300',
-                loading: 'border-cyan-300/45 bg-cyan-500/10 text-cyan-200',
-                success: 'border-lime-300/45 bg-lime-500/10 text-lime-200',
-                error: 'border-pink-300/45 bg-pink-500/10 text-pink-200'
+                neutral: 'is-neutral',
+                loading: 'is-loading',
+                success: 'is-success',
+                error: 'is-error'
             };
 
             el.status.textContent = message;
-            el.status.className = `rounded-xl border px-4 py-3 text-sm ${variants[type] || variants.neutral}`;
+            el.status.className = `status-pill rounded-xl border px-4 py-3 text-sm ${variants[type] || variants.neutral}`;
         };
 
         const app = {
@@ -537,11 +869,13 @@
                 const delay = 2000;
 
                 for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-                    const transcriptionURL = `https://res.cloudinary.com/${config.cloudName}/raw/upload/v${Date.now()}/${app.public_id}.transcript`;
                     setStatus(`Preparando transcrição (${attempt}/${maxAttempts})...`, 'loading');
+
+                    const transcriptionURL = `https://res.cloudinary.com/${config.cloudName}/raw/upload/v${Date.now()}/${app.public_id}.transcript`;
 
                     try {
                         const response = await fetch(transcriptionURL, { cache: 'no-store' });
+
                         if (response.ok) {
                             app.transcriptionURL = transcriptionURL;
                             return true;
@@ -551,7 +885,8 @@
                     }
 
                     if (attempt < maxAttempts) {
-                        await new Promise((resolve) => setTimeout(resolve, delay));
+                        const backoff = delay;
+                        await new Promise((resolve) => setTimeout(resolve, backoff));
                     }
                 }
 
@@ -564,9 +899,19 @@
             },
 
             getViralMoment: async () => {
+                // Verificar se há valores manuais informados
+                const manualStart = el.startTime.value ? parseFloat(el.startTime.value) : null;
+                const manualDuration = el.duration.value ? parseFloat(el.duration.value) : null;
+                
+                if (manualStart !== null && manualDuration !== null) {
+                    // Usar corte manual
+                    const endTime = manualStart + manualDuration;
+                    return `so_${manualStart},eo_${endTime}`;
+                }
+                
+                // Usar IA para gerar corte automático
                 const transcription = await app.getTranscription();
-                const model = 'gemini-2.5-flash';
-                const endpointGemini = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+                const models = ['gemini-2.5-flash'];
                 const maxRetries = 6;
                 const retryDelay = 2000;
 
@@ -593,34 +938,60 @@ ${transcription}`;
                     }
                 ];
 
-                for (let attempt = 1; attempt <= maxRetries; attempt++) {
-                    try {
-                        setStatus(`Analisando momento viral com IA (${attempt}/${maxRetries})...`, 'loading');
-                        const response = await fetch(endpointGemini, {
-                            method: 'POST',
-                            headers,
-                            body: JSON.stringify({ contents })
-                        });
+                for (const model of models) {
+                    const endpointGemini = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
-                        if (!response.ok) {
-                            const errorText = await response.text();
-                            throw new Error(`Gemini retornou ${response.status}: ${errorText}`);
+                    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                        try {
+                            setStatus(`Analisando momento viral com IA (${attempt}/${maxRetries})...`, 'loading');
+                            const response = await fetch(endpointGemini, {
+                                method: 'POST',
+                                headers,
+                                body: JSON.stringify({ contents })
+                            });
+
+                            if (!response.ok) {
+                                const errorText = await response.text();
+
+                                if (response.status === 400 || response.status === 401 || response.status === 403 || response.status === 404) {
+                                    throw new Error(`Erro de autenticação/configuração (${response.status}). Confira a API key.`);
+                                }
+
+                                throw new Error(`Gemini retornou ${response.status}: ${errorText}`);
+                            }
+
+                            const data = await response.json();
+                            const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                            if (!rawText) {
+                                throw new Error('Resposta da IA veio vazia.');
+                            }
+
+                            return rawText.replace(/```/g, '').replace(/json/g, '').trim();
+                        } catch (error) {
+                            const isLastAttempt = attempt === maxRetries;
+                            const isLastModel = model === models[models.length - 1];
+                            console.log(`Gemini falhou (${model} tentativa ${attempt}/${maxRetries}):`, error.message);
+
+                            if (error.message.includes('autenticação/configuração')) {
+                                throw error;
+                            }
+
+                            if (isLastAttempt && isLastModel) {
+                                throw new Error('Serviço da IA indisponível no momento (503). Tente novamente em alguns minutos.');
+                            }
+
+                            if (isLastAttempt) {
+                                break;
+                            }
+
+                            const backoff = Math.min(retryDelay * Math.pow(2, attempt - 1), 12000);
+                            await new Promise((resolve) => setTimeout(resolve, backoff));
                         }
-
-                        const data = await response.json();
-                        const rawText = data.candidates[0].content.parts[0].text;
-                        return rawText.replace(/```/g, '').replace(/json/g, '').trim();
-                    } catch (error) {
-                        const isLastAttempt = attempt === maxRetries;
-                        console.log(`Gemini falhou (tentativa ${attempt}/${maxRetries}):`, error.message);
-                        if (isLastAttempt) {
-                            throw error;
-                        }
-
-                        const backoff = Math.min(retryDelay * Math.pow(2, attempt - 1), 12000);
-                        await new Promise((resolve) => setTimeout(resolve, backoff));
                     }
                 }
+
+                throw new Error('Não foi possível obter resposta da IA.');
             }
         };
 
@@ -660,7 +1031,7 @@ ${transcription}`;
                     setStatus('Corte viral pronto. Aperte play e valide o resultado.', 'success');
                 } catch (processingError) {
                     console.error({ processingError });
-                    setStatus('Não foi possível gerar o corte agora. Revise a API key e tente novamente.', 'error');
+                    setStatus(processingError.message || 'Não foi possível gerar o corte agora. Revise a API key e tente novamente.', 'error');
                 } finally {
                     el.button.disabled = false;
                     moveUploadButton(false);
@@ -685,10 +1056,42 @@ ${transcription}`;
         el.video.addEventListener('emptied', () => setPreviewLoadedState(false));
         el.video.addEventListener('error', () => setPreviewLoadedState(false));
         setPreviewLoadedState(false);
+        setupThemeToggle();
 
         lucide.createIcons();
 
         gsap.registerPlugin(ScrollTrigger, Flip);
+
+        const animateOnEnter = (targets, buildAnimation, options = {}) => {
+            gsap.utils.toArray(targets).forEach((item, index) => {
+                if (options.skip && options.skip(item)) {
+                    return;
+                }
+
+                ScrollTrigger.create({
+                    trigger: item,
+                    start: options.start || 'top 88%',
+                    once: true,
+                    onEnter: () => {
+                        const config = buildAnimation(item, index) || {};
+                        gsap.fromTo(item, config.from || {}, { ...(config.to || {}), overwrite: 'auto' });
+                    }
+                });
+            });
+        };
+
+        // Entrada inicial do topo para manter o impacto da versão anterior.
+        gsap.fromTo(
+            'header nav, section:first-of-type .lg\\:col-span-7, section:first-of-type .lg\\:col-span-5',
+            { y: 26, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power2.out',
+                stagger: 0.08
+            }
+        );
 
         gsap.utils.toArray('[data-animate="fade-up"]').forEach((item, index) => {
             gsap.fromTo(
@@ -702,8 +1105,9 @@ ${transcription}`;
                     ease: 'power2.out',
                     scrollTrigger: {
                         trigger: item,
-                        start: 'top 82%',
-                        toggleActions: 'play reverse play reverse'
+                        start: 'top 90%',
+                        once: true,
+                        toggleActions: 'play none none none'
                     }
                 }
             );
@@ -720,8 +1124,9 @@ ${transcription}`;
                     ease: 'power2.out',
                     scrollTrigger: {
                         trigger: item,
-                        start: 'top 85%',
-                        toggleActions: 'play reverse play reverse'
+                        start: 'top 92%',
+                        once: true,
+                        toggleActions: 'play none none none'
                     }
                 }
             );
@@ -738,47 +1143,6 @@ ${transcription}`;
             stagger: 0.5
         });
 
-        /* Animações de scroll para títulos e textos principais */
-        gsap.utils.toArray('h1, h2').forEach((item) => {
-            gsap.fromTo(
-                item,
-                { y: 40, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: item,
-                        start: 'top 85%',
-                        toggleActions: 'play reverse play reverse'
-                    }
-                }
-            );
-        });
-
-        /* Animação de entrada lateral para parágrafos */
-        gsap.utils.toArray('p').forEach((item) => {
-            if (item.closest('article') || item.closest('[data-animate]')) {
-                gsap.fromTo(
-                    item,
-                    { x: -30, opacity: 0 },
-                    {
-                        x: 0,
-                        opacity: 1,
-                        duration: 0.7,
-                        ease: 'power2.out',
-                        delay: 0.1,
-                        scrollTrigger: {
-                            trigger: item,
-                            start: 'top 88%',
-                            toggleActions: 'play reverse play reverse'
-                        }
-                    }
-                );
-            }
-        });
-
         /* Animação customizada slide-in-left */
         gsap.utils.toArray('[data-animate="slide-in-left"]').forEach((item) => {
             gsap.fromTo(
@@ -791,8 +1155,9 @@ ${transcription}`;
                     ease: 'back.out(1.2)',
                     scrollTrigger: {
                         trigger: item,
-                        start: 'top 90%',
-                        toggleActions: 'play reverse play reverse'
+                        start: 'top 92%',
+                        once: true,
+                        toggleActions: 'play none none none'
                     }
                 }
             );
@@ -811,12 +1176,35 @@ ${transcription}`;
                     ease: 'elastic.out(1, 0.5)',
                     scrollTrigger: {
                         trigger: item,
-                        start: 'top 85%',
-                        toggleActions: 'play reverse play reverse'
+                        start: 'top 92%',
+                        once: true,
+                        toggleActions: 'play none none none'
                     }
                 }
             );
         });
+
+        // Reintroduz animações de títulos e parágrafos sem risco de manter opacidade 0.
+        animateOnEnter(
+            'h1:not([data-animate]), h2:not([data-animate])',
+            () => ({
+                from: { y: 34, opacity: 0 },
+                to: { y: 0, opacity: 1, duration: 0.85, ease: 'power3.out' }
+            }),
+            { start: 'top 92%' }
+        );
+
+        animateOnEnter(
+            'p',
+            (_item, index) => ({
+                from: { x: -18, opacity: 0 },
+                to: { x: 0, opacity: 1, duration: 0.65, ease: 'power2.out', delay: Math.min(index * 0.01, 0.12) }
+            }),
+            {
+                start: 'top 93%',
+                skip: (item) => Boolean(item.closest('[data-animate]'))
+            }
+        );
     </script>
 </body>
 </html>
